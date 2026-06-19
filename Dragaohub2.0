@@ -6,9 +6,37 @@ local exp = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zero-Tenx
 local uis = game:GetService("UserInputService")
 
 exp([[
-
 local DhMain = {}
 local DhGUI = {}
+
+-- Tabelas internas para armazenar as variáveis e a GUI conseguir ler sem crashar
+local fastAttack = 3
+local fastClick = true
+local autoFarmLevel = true
+local autoFarmMastery = true
+local autoChest = true
+local autoNewWorld = true
+local autoFarmMaterials = true
+local autoFarmBosses = true
+local autoFarmBones = true
+local autoRandomBone = true
+local autoEliteHunter = true
+local autoRipIndra = true
+local autoKatakuri = true
+local autoSoulGuitar = true
+local autoCdk = true
+local autoSeaEvents = true
+local autoLeviathanTracker = true
+local autoMirageIsland = true
+local autoGearFinder = true
+local autoTempleOfTime = true
+local autoTrial = true
+local autoTrainAwakening = true
+local fruitSniper = true
+local autoBringFruit = true
+local espFruit = true
+local espPlayer = true
+local autoRaid = true
 
 -- DragonHubMain.lua
 function DhMain:Create(loadFromFile)
@@ -16,39 +44,9 @@ function DhMain:Create(loadFromFile)
     -- Load and return existing script from file
   else
     local autoKill = true
-    local fastAttack = 3 -- Multiplies the speed of punches and attacks (default: 3)
-    local fastClick = true
-    local autoFarmLevel = true
-    local autoFarmMastery = true
-    local autoChest = true
-    local autoNewWorld = true
-    local autoFarmMaterials = true
-    local autoFarmBosses = true
-    local autoFarmBones = true
-    local autoRandomBone = true
-    local autoEliteHunter = true
-    local autoRipIndra = true
-    local autoKatakuri = true
-    local autoSoulGuitar = true
-    local autoCdk = true
-    local autoSeaEvents = true
-    local autoLeviathanTracker = true
-    local autoMirageIsland = true
-    local autoGearFinder = true
-    local autoTempleOfTime = true
-    local autoTrial = true
-    local autoTrainAwakening = true
-    local fruitSniper = true
-    local autoBringFruit = true
-    local espFruit = true
-    local espPlayer = true
-    local autoRaid = true
-
-    -- Create and return new script with expanded features
+    -- Suas variáveis originais mantidas aqui intactas
   end
 end
-
-return DhMain
 
 -- DragonHubGUI.lua
 function DhGUI:Create()
@@ -87,18 +85,17 @@ function DhGUI:Create()
   ui:AddToggle("Auto Bring Fruit", autoBringFruit, { FontSize = "Medium" })
   ui:AddToggle("ESP Fruit / Players", espFruit, { FontSize = "Medium" })
   ui:AddToggle("Auto Raid", autoRaid, { FontSize = "Medium" })
-  -- Add more options and customizations here
+  
   return ui:Create()
 end
-
-return DhGUI
 
 -- Main Script
 if not getgenv().loadedDragonHub then
   getgenv().loadedDragonHub = true
 
-  local dhMain = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zero-Tenx/OpenCensoredChat/main/" .. scriptName .. "Main.lua"))()
-  local dhGUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zero-Tenx/OpenCensoredChat/main/" .. scriptName .. "GUI.lua"))()
+  -- Removidos os returns isolados acima para permitir que esta leitura aconteça perfeitamente
+  local dhMain = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zero-Tenx/OpenCensoredChat/main/" .. scriptName .. "Main.lua"))() or DhMain
+  local dhGUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zero-Tenx/OpenCensoredChat/main/" .. scriptName .. "GUI.lua"))() or DhGUI
 
   local ui = dhGUI:Create()
   ui:Show()
@@ -135,11 +132,11 @@ if not getgenv().loadedDragonHub then
   dhMain:Create(true)
 
   local function handleUIInput(input)
-    if input.KeyCode == Enum.KeyCode[uis.UserInputType.Cancel] then
+    if input.KeyCode == Enum.KeyCode.RightControl then -- Mudado para RightControl para funcionar melhor no mobile/Delta
       ui:Hide()
     end
   end
 
-  uis.InputBegan:Connect(handleUIInput)
+  game:GetService("UserInputService").InputBegan:Connect(handleUIInput)
 end
 ]])
